@@ -68,6 +68,12 @@ execute_builtin_cmd(char **args)
         change_directory(args[1]);
         return 1;
     }
+
+    if (strcmp(args[0], "help") == 0)
+    {
+        print_help();
+        return 1;
+    }
     return 0;
 }
 
