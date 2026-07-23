@@ -2,4 +2,4 @@ all:
 	@echo "run make install"
 
 install:
-	@gcc -o ash main.c
+	@gcc -o ash ash.c
