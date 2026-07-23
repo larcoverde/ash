@@ -18,6 +18,6 @@ print_help()
     printf("cd  go <path>    change directory\n\n");
     printf("Use any other command from your utility binaries package.\n");
     printf("You can try my own binaries! Search for smutils on my github.\n");
-    printf("https://www.github.com/larcoverde/smutils\n\n");
+    printf("\033]8;;https://www.github.com/larcoverde\033\\Click here to visit my other projects.\033]8;;\033\\\n");
 }
 
