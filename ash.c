@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include "builtin.h"
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
@@ -59,6 +60,12 @@ execute_builtin_cmd(char **args)
     {
         printf("exiting...\n");
         exit(0);
+        return 1;
+    }
+
+    if (strcmp(args[0], "cd") == 0 || strcmp(args[0], "go") == 0)
+    {
+        change_directory(args[1]);
         return 1;
     }
     return 0;
