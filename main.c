@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
@@ -62,6 +64,25 @@ execute_builtin_cmd(char **args)
     return 0;
 }
 
+void
+execute_external_cmd(char **args)
+{
+    pid_t pid = fork();
+
+    if (pid == 0)
+    {
+        if (execvp(args[0], args) < 0)
+        {
+            perror("command failed");
+        }
+        exit(1);
+    }
+    else
+    {
+        wait(NULL);
+    }
+}
+
 int
 main(int argc, char* argv[])
 {
@@ -79,7 +100,9 @@ main(int argc, char* argv[])
 
         tokenize_input(input, args);
 
-        execute_builtin_cmd(args);
+        if (execute_builtin_cmd(args)) continue;
+
+        execute_external_cmd(args);
 
     }
     return 0;
