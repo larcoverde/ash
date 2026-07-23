@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
@@ -39,19 +40,31 @@ tokenize_input(char *input, char **args)
 {
     int i = 0;
     
-    agrs[i] = strtok(input, " ");
+    args[i] = strtok(input, " ");
     while (args[i] != NULL && i < MAX_ARGS-1)
     {
         ++i;
-        agrs[i] = strtok(NULL, " ");
+        args[i] = strtok(NULL, " ");
     }
+}
+
+int
+execute_builtin_cmd(char **args)
+{
+    if (strcmp(args[0], "exit") == 0)
+    {
+        printf("exiting...\n");
+        exit(0);
+        return 1;
+    }
+    return 0;
 }
 
 int
 main(int argc, char* argv[])
 {
     char input[MAX_INPUT];
-    char args[MAX_ARGS];
+    char *args[MAX_ARGS];
 
     print_banner();
     int i = 1;
@@ -64,7 +77,8 @@ main(int argc, char* argv[])
 
         tokenize_input(input, args);
 
-        i = 0;
+        execute_builtin_cmd(args);
+
     }
     return 0;
 }
