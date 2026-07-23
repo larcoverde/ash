@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #define MAX_INPUT 1024
+#define MAX_ARGS 64
 
 void
 print_banner()
@@ -32,10 +34,24 @@ get_user_input(char *input)
         printf("exiting...\n");
 }
 
+void
+tokenize_input(char *input, char **args)
+{
+    int i = 0;
+    
+    agrs[i] = strtok(input, " ");
+    while (args[i] != NULL && i < MAX_ARGS-1)
+    {
+        ++i;
+        agrs[i] = strtok(NULL, " ");
+    }
+}
+
 int
 main(int argc, char* argv[])
 {
     char input[MAX_INPUT];
+    char args[MAX_ARGS];
 
     print_banner();
     int i = 1;
@@ -43,6 +59,11 @@ main(int argc, char* argv[])
     {
         print_cwd();
         get_user_input(input);
+
+        if (strlen(input) == 0) continue;
+
+        tokenize_input(input, args);
+
         i = 0;
     }
     return 0;
