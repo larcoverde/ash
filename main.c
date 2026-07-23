@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define MAX_INPUT 1024
+
 void
 print_banner()
 {
@@ -22,15 +24,26 @@ print_cwd()
         printf("cwd: %s\n", cwd);
 }
 
+void
+get_user_input(char *input)
+{
+    printf("-> ");
+    if (fgets(input, MAX_INPUT, stdin) == NULL)
+        printf("exiting...\n");
+}
+
 int
 main(int argc, char* argv[])
 {
+    char input[MAX_INPUT];
+
     print_banner();
-    int i = 0;
-    while (i == 0)
+    int i = 1;
+    while (i == 1)
     {
         print_cwd();
-        i = 1;
+        get_user_input(input);
+        i = 0;
     }
     return 0;
 }
