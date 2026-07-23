@@ -33,6 +33,8 @@ get_user_input(char *input)
     printf("-> ");
     if (fgets(input, MAX_INPUT, stdin) == NULL)
         printf("exiting...\n");
+
+    input[strcspn(input, "\n")] = 0;
 }
 
 void
